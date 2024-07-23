@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - develop  # Cambia 'main' por la rama que uses, como 'master' si es necesario
+      - develop
 
 jobs:
   build:
@@ -12,6 +12,17 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      with:
+        ref: develop
+
+    - name: Fetch all history for all tags and branches
+      run: git fetch --prune --unshallow
+
+    - name: List all branches
+      run: git branch -a
+
+    - name: Show latest commits
+      run: git log -n 5
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
